@@ -12,7 +12,6 @@ int main() {
 		{
 			if (riadok.at(i) == '\\') {
 				if (i == riadok.size() - 1) {
-				//	pom+= riadok.at(i);
 					continue;
 				}
 				char znak = riadok.at(i + 1);
