@@ -1,22 +1,25 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 int main() {
 	string riadok;
 	bool hviezda = true;
+	
 	while (getline(cin, riadok)) {
 	
 		string pom;
 		for (int i = 0; i < riadok.size(); i++)
 		{
-			if (riadok.at(i) == '\\') {
-				if (i == riadok.size() - 1) {
-					continue;
-				}
-				char znak = riadok.at(i + 1);
+
+			if (riadok.at(i) == '\\'  ) {
+				
 				if (hviezda) {
-					switch (znak) {
+					if (i + 1 < riadok.size()) {
+						i++;
+						char znak = riadok.at(i);
+						switch (znak) {
 						case '*':
 							hviezda = false;
 							break;
@@ -25,8 +28,8 @@ int main() {
 						case 'i':
 							break;
 						case 's':
-							if (i < riadok.size() - 2) {
-								while ((riadok.at(i + 2) == '.' || (riadok.at(i + 2) >= 48 && riadok.at(i + 2) <= 58)) && i <riadok.size()-2) {
+							if (i < riadok.size() - 1) {
+								while ((riadok.at(i + 1) == '.' || (riadok.at(i + 1) >= 48 && riadok.at(i + 1) <= 58)) && i < riadok.size() - 1) {
 									i++;
 								}
 							}
@@ -34,28 +37,28 @@ int main() {
 						default:
 							pom += znak;
 							break;
+						}
 					}
-					i++;
 				}
 				else {
-					if (znak == '*') {
+					if (riadok.size() >i+1 && riadok.at(i+1) == '*') {
 						hviezda = true;
 						i++;
 					}
 					else {
-						if ((riadok.size() <= i + 2) || riadok.at(i+2) !='*') {
-							pom += '\\';
-							i++;
-						}
-						pom += znak;
-					
+						pom+= riadok.at(i);
 					}
 				}
 			}
 			else {
-				pom += riadok.at(i);
+				if(riadok.at(i) == '\\'&& hviezda) {
+				}
+				else {
+					pom += riadok.at(i);
+				}
 			}
 		}
+		
 		cout << pom << endl;
 	}
 
